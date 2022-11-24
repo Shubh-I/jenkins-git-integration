@@ -13,7 +13,7 @@ pipeline {
     stage('build') {
         steps {
               
-                sh "${mavenCMD} clean package"
+                sh "clean package"
         }
     }
   }
