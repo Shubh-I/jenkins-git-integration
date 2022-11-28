@@ -18,7 +18,7 @@ pipeline {
       stage('scan') {
         steps {
               withSonarQubeEnv(installationName: 'sonarqube') {
-                 sh "mvn sonar:sonar -Dsonar.login=myAuthenticationToken"
+                 sh "mvn sonar:sonar -Dsonar.login=squ_04835ba089c40b3237f085134ac46e3583333e7b"
         }
     }
   }
