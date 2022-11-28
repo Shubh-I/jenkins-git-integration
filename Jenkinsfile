@@ -1,6 +1,6 @@
 pipeline {
    agent any
-    tool {
+    tools {
         maven = 'maven-3.6.3'
     }
    // def mvnHome = tool:'maven-3.6.3', type: 'maven'
