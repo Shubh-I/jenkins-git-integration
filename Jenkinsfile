@@ -24,7 +24,10 @@ pipeline {
   }
      stage('qualitygate check') {
         steps {
-                 sh "waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonar'"
+                 def qualitygate = waitForQualityGate()
+                    if (qualitygate.status != "OK") {
+                   error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
+
         }
     }
   }
