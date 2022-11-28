@@ -9,13 +9,13 @@ pipeline {
     }
     stage('build') {
        steps {   
-                sh "/bin/mvn package"
+          sh "${mvnHome}/bin/mvn package"
         }
     }
       stage('scan') {
         steps {
               withSonarQubeEnv(installationName: 'sonarqube') {
-                 sh "/bin/mvn clean sonar:sonar"
+                 sh "${mvnHome}/bin/mvn clean sonar:sonar"
         }
     }
   }
