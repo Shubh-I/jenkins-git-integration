@@ -9,7 +9,7 @@ pipeline{
             steps{
                 
                  checkout scm
-                }
+                
             }
         }
         stage('UNIT testing'){
