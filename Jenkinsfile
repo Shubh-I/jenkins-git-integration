@@ -1,21 +1,32 @@
 pipeline {
    agent any
+    tools {
+        maven 'maven-3.6.3'
+    }
+   // def mvnHome = tool:'maven-3.6.3', type: 'maven'
    stages {
     stage('Checkout') {
       steps {
-        script {
-           // The below will clone your repo and will be checked out to master branch by default.
-           git credentialsId: 'jenkins-user-github', url: 'https://github.com/Shubh-I/jenkins-git-integration.git'
-         
-          }
+               checkout scm
        }
     }
     stage('build') {
-        steps {
-                def mavenHome = tool name: "Maven_3.8.6", type ="maven"
-                def mavenCMD = "${mavenHome}/bin/mvn"
-                sh "${mavenCMD} clean package"
+       steps {   
+          sh "mvn package"
         }
     }
+      stage('scan') {
+        steps {
+              withSonarQubeEnv(installationName: 'sonarqube') {
+                 sh "mvn sonar:sonar -Dsonar.login=squ_04835ba089c40b3237f085134ac46e3583333e7b"
+        }
+    }
+  }
+     stage('qualitygate check') {
+        steps {
+                 sh "waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonar'"
+        }
+    }
+  }
   }
 }
