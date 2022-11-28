@@ -22,7 +22,6 @@ pipeline {
         }
     }
   }
-<<<<<<< HEAD
      stage('qualitygate check') {
         steps {
                  sh "waitForQualityGate abortPipeline: false, credentialsId: 'jenkins-sonar'"
@@ -30,8 +29,3 @@ pipeline {
     }
   }
   }
-}
-=======
-  }
-}
->>>>>>> 82ed1ccdfffc84f35750a2476d2d41f31c991bd9
