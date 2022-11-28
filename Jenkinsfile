@@ -1,7 +1,7 @@
 pipeline {
    agent any
    tools {
-    maven 'maven-3.6.3' 
+    def mvnHome = tool name:'maven-3.6.3', type: 'maven'
   }
    stages {
     stage('Checkout') {
@@ -10,15 +10,14 @@ pipeline {
        }
     }
     stage('build') {
-        steps {
-              
-                sh "mvn clean package"
+       steps {   
+                sh "/bin/mvn package"
         }
     }
       stage('scan') {
         steps {
               withSonarQubeEnv(installationName: 'sonarqube') {
-                 sh "mvn clean sonar:sonar"
+                 sh "/bin/mvn clean sonar:sonar"
         }
     }
   }
