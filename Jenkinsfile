@@ -34,5 +34,16 @@ pipeline {
         }
     }
   }
+    stage('docker build') {
+        steps {
+                script{
+                  $tag= VersionNumber(versionNumberString: '${BUILD_DATE_FORMATTED, "yyyyMMdd"}-develop-${BUILDS_TODAY}')
+                  docker build -t project/jenkins-integration:$tag .
+                }
+                 
+
+        }
+    }
+  }
   }
 }
