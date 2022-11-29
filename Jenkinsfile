@@ -28,9 +28,7 @@ pipeline {
                   def qualitygate = waitForQualityGate()
                     if (qualitygate.status != "OK") {
                    error "Pipeline aborted due to quality gate coverage failure: ${qualitygate.status}"
-                }
-                 
-
+                    }
         }
     }
   }
@@ -40,10 +38,10 @@ pipeline {
                   $tag= VersionNumber(versionNumberString: '${BUILD_DATE_FORMATTED, "yyyyMMdd"}-develop-${BUILDS_TODAY}')
                   sh "docker build -t project/jenkins-integration:$tag ."
                 }
-        }       
-        }
+         }       
+      }
     }
   }
   
-}
+
 //lets test
