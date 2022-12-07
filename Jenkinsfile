@@ -32,14 +32,28 @@ pipeline {
         }
     }
   }
-    stage('docker build') {
-        steps {
-                script{
-                  $tag= VersionNumber(versionNumberString: '${BUILD_DATE_FORMATTED, "yyyyMMdd"}-develop-${BUILDS_TODAY}')
-                  sh "docker build -t project/jenkins-integration:$tag ."
-                }
-         }       
+    stage ('upload to nexus'){
+      steps {
+          script{
+            nexusArtifactUploader artifacts:
+             [
+              [artifactId: 'junit', 
+              classifier: '', 
+              file: 'target/jenkins-git-integration.war', 
+              type: 'war'
+              ]
+              ], 
+              credentialsId: 'nexus-auth', 
+              groupId: 'junit', 
+              nexusUrl: '3.235.67.31:8081', 
+              nexusVersion: 'nexus3', 
+              protocol: 'http', 
+              repository: 'jenkins-java-app', 
+              version: '3.8.1'
+          }
       }
+    }
+    
     }
   }
   
